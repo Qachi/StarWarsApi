@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">StarWarsApi_Paging3_RoomDB</string>
+
+    <string name="birth">TextView</string>
+    <string name="eye">TextView</string>
+    <string name="film">TextView</string>
+    <string name="gender">TextView</string>
+    <string name="name">TextView</string>
+    <string name="nameRow">TextView</string>
+    <string name="birthRow">TextView</string>
+    <string name="eyeRow">TextView</string>
+    <string name="filmRow">TextView</string>
+    <string name="genderRow">TextView</string>
+    <string name="nameTxt">TextView</string>
+    <string name="birthTxt">TextView</string>
+    <string name="eye_Txt">TextView</string>
+    <string name="genderTxt">TextView</string>
+</resources>
