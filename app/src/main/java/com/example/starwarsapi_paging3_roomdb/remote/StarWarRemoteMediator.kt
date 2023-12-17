@@ -16,7 +16,6 @@ class StarWarRemoteMediator(
     private val starWarDatabase: StarWarDatabase,
     private val initialPage: Int = 1,
 ) : RemoteMediator<Int, PeopleResponseEntity>() {
-
     override suspend fun initialize(): InitializeAction {
         return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
@@ -25,7 +24,6 @@ class StarWarRemoteMediator(
         loadType: LoadType,
         state: PagingState<Int, PeopleResponseEntity>
     ): MediatorResult {
-
         return try {
             val page = when (loadType) {
                 LoadType.APPEND -> {
@@ -43,8 +41,7 @@ class StarWarRemoteMediator(
                     remoteKey?.next?.minus(1) ?: initialPage
                 }
             }
-
-            val response = starWarsApi.getPost()
+            val response = starWarsApi.getPeople()
             val endOfPagination = response.body()?.results?.size!! < state.config.pageSize
 
             if (response.isSuccessful) {

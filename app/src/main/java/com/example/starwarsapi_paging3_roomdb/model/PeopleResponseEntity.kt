@@ -13,15 +13,6 @@ data class PeopleResponseEntity(
     val films: List<String>,
     val gender: String,
     @PrimaryKey(autoGenerate = false) val url: String
-) {
-    fun toPeople() = People(
-        id = id,
-        name = name,
-        birth_year = birth_year,
-        eye_color = birth_year,
-        films = films,
-        gender = gender,
-        url = url
-    )
-}
+)
+
 

@@ -13,11 +13,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.starwarsapi_paging3_roomdb.adapter.StarWarAdapter
-import com.example.starwarsapi_paging3_roomdb.model.People
+import com.example.starwarsapi_paging3_roomdb.databinding.ActivityPeopleBinding
+import com.example.starwarsapi_paging3_roomdb.model.PeopleResponseEntity
 import com.example.starwarsapi_paging3_roomdb.viewmodel.PeopleViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 
@@ -26,25 +26,32 @@ class PeopleActivity : AppCompatActivity(), StarWarAdapter.OnPeopleClickListener
 
     private val viewModel by viewModels<PeopleViewModel>()
     private val myAdapter by lazy { StarWarAdapter(this) }
-
+    private lateinit var bindings: ActivityPeopleBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        bindings = ActivityPeopleBinding.inflate(layoutInflater)
+        val view = bindings.root
+        setContentView(view)
 
         networkConnection()
-
     }
 
     private fun setUpRecyclerView() {
-        recyclerView.apply {
+        bindings.recyclerView.apply {
             adapter = myAdapter
-            layoutManager = LinearLayoutManager(this@PeopleActivity, LinearLayoutManager.VERTICAL, false)
-            val divider = DividerItemDecoration(applicationContext, DividerItemDecoration.VERTICAL)
+            layoutManager =
+                LinearLayoutManager(
+                    this@PeopleActivity,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            val divider = DividerItemDecoration(
+                applicationContext,
+                DividerItemDecoration.VERTICAL
+            )
             addItemDecoration(divider)
         }
-
-
     }
 
     private fun initViewModel() {
@@ -55,8 +62,6 @@ class PeopleActivity : AppCompatActivity(), StarWarAdapter.OnPeopleClickListener
                 myAdapter.submitData(it)
             }
         }
-
-
     }
 
     private fun networkConnection() {
@@ -73,7 +78,6 @@ class PeopleActivity : AppCompatActivity(), StarWarAdapter.OnPeopleClickListener
             initViewModel()
             snackBar()
         }
-
     }
 
     private fun snackBar() {
@@ -94,10 +98,9 @@ class PeopleActivity : AppCompatActivity(), StarWarAdapter.OnPeopleClickListener
         snackBar.show()
     }
 
-    override fun itemClicked(people: People, position: Int) {
+    override fun itemClicked(people: PeopleResponseEntity, position: Int) {
         val intent = Intent(this, PeopleDetailsActivity::class.java)
         intent.putExtra("PEOPLE", people.url)
         startActivity(intent)
     }
-
 }

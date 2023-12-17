@@ -9,13 +9,13 @@ import com.example.starwarsapi_paging3_roomdb.model.PeopleResponseEntity
 import com.example.starwarsapi_paging3_roomdb.model.PeopleResponseRemoteKey
 import com.example.starwarsapi_paging3_roomdb.model.RoomTypeConverter
 
-@Database(entities = [PeopleResponseEntity::class, PeopleResponseRemoteKey::class], version = 4)
+@Database(
+    entities = [PeopleResponseEntity::class,
+        PeopleResponseRemoteKey::class],
+    version = 4
+)
 @TypeConverters(RoomTypeConverter::class)
-
 abstract class StarWarDatabase : RoomDatabase() {
-
     abstract fun getStarWarDao(): StarWarDao
     abstract fun getRemoteKeyDao(): RemoteKeyDao
-
-
 }
