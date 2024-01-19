@@ -15,11 +15,10 @@ class StarWarRemoteMediator(
     private val starWarsApi: StarWarsApi,
     private val starWarDatabase: StarWarDatabase,
     private val initialPage: Int = 1,
-) : RemoteMediator<Int, PeopleResponseEntity>() {
+):RemoteMediator<Int, PeopleResponseEntity>() {
     override suspend fun initialize(): InitializeAction {
         return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
-
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, PeopleResponseEntity>
@@ -46,28 +45,22 @@ class StarWarRemoteMediator(
 
             if (response.isSuccessful) {
                 response.body()?.let {
-
                     if (loadType == LoadType.REFRESH) {
                         starWarDatabase.getStarWarDao().deletePeople()
                         starWarDatabase.getRemoteKeyDao().deleteRemoteKeys()
                     }
-
                     val prev = if (page == initialPage) null else page.minus(1)
                     val next = if (endOfPagination) null else page.plus(1)
 
                     val list = response.body()?.results?.map {
                         PeopleResponseRemoteKey(it.url, prev, next)
                     }
-
                     if (list != null) {
-
                         starWarDatabase.getStarWarDao().insertPeople(response.body()?.results?.map {
                             it.toPeopleResponseEntity()
-
                         }!!)
                     }
                     if (list != null) {
-
                         starWarDatabase.getRemoteKeyDao().insertAllRemoteKeys(list)
                     }
                 }
@@ -79,7 +72,6 @@ class StarWarRemoteMediator(
             MediatorResult.Error(e)
         }
     }
-
     private suspend fun getClosestRemoteKeys(state: PagingState<Int, PeopleResponseEntity>): PeopleResponseRemoteKey? {
         return state.anchorPosition?.let { it ->
             state.closestItemToPosition(it)?.let {
@@ -87,13 +79,11 @@ class StarWarRemoteMediator(
             }
         }
     }
-
     private suspend fun getLastRemoteKey(state: PagingState<Int, PeopleResponseEntity>): PeopleResponseRemoteKey? {
         return state.lastItemOrNull()?.let {
             starWarDatabase.getRemoteKeyDao().getPeopleRemoteKeys(it.id)
         }
     }
-
     private suspend fun getFirstRemoteKey(state: PagingState<Int, PeopleResponseEntity>): PeopleResponseRemoteKey? {
         return state.firstItemOrNull()?.let {
             starWarDatabase.getRemoteKeyDao().getPeopleRemoteKeys(it.id)

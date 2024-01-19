@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.starwarsapi_paging3_roomdb.databinding.ActivityPeopleDetailsBinding
+import com.example.starwarsapi_paging3_roomdb.util.Constant
 import com.example.starwarsapi_paging3_roomdb.util.Status
 import com.example.starwarsapi_paging3_roomdb.viewmodel.PersonViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,7 +16,7 @@ import kotlinx.coroutines.flow.collectLatest
 @AndroidEntryPoint
 class PeopleDetailsActivity : AppCompatActivity() {
     private val viewModel by viewModels<PersonViewModel>()
-    private val url by lazy { intent.extras!!.getString("PEOPLE")!! }
+    private val url by lazy { intent.extras!!.getString(Constant.CHARACTERS)!! }
     private lateinit var binding: ActivityPeopleDetailsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
