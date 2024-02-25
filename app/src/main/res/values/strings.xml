@@ -15,4 +15,6 @@
     <string name="birthTxt">TextView</string>
     <string name="eye_Txt">TextView</string>
     <string name="genderTxt">TextView</string>
+    <string name="network_connection">Please Check Network Connection</string>
+    <string name="ok">Ok</string>
 </resources>
