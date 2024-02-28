@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PeopleViewModel @Inject constructor(
- starWarRepository: StarWarRepository
+    starWarRepository: StarWarRepository
 ) : ViewModel() {
 
     val getPeople: Flow<PagingData<PeopleResponseEntity>> = starWarRepository.getPeople()

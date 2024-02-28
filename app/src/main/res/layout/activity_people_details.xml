@@ -2,12 +2,11 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/cardViewLayout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="40dp"
-    app:cardBackgroundColor="@color/black"
-    >
+    app:cardBackgroundColor="@color/black">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,12 +16,12 @@
 
         <TextView
             android:id="@+id/nameText"
-            android:textColor= "@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             android:text="@string/name"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,9 +29,9 @@
             android:id="@+id/birthTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor= "@color/white"
             android:layout_marginTop="3dp"
             android:text="@string/birth"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="@id/nameText"
             app:layout_constraintTop_toBottomOf="@id/nameText" />
 
@@ -40,9 +39,9 @@
             android:id="@+id/eyeTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor= "@color/white"
             android:layout_marginTop="3dp"
             android:text="@string/eye"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="@+id/birthTxt"
             app:layout_constraintTop_toBottomOf="@id/birthTxt"
             tools:layout_editor_absoluteY="66dp" />
@@ -51,10 +50,10 @@
             android:id="@+id/filmTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor= "@color/white"
             android:layout_marginStart="30dp"
             android:layout_marginTop="3dp"
             android:text="@string/film"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/eyeTxt"
             tools:layout_editor_absoluteY="107dp" />
@@ -62,10 +61,10 @@
         <TextView
             android:id="@+id/genderTxt"
             android:layout_width="wrap_content"
-            android:textColor= "@color/white"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:text="@string/gender"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="@id/filmTxt"
             app:layout_constraintTop_toBottomOf="@id/filmTxt"
             tools:layout_editor_absoluteY="107dp" />

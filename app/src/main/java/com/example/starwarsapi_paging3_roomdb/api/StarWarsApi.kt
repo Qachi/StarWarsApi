@@ -7,6 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Url
 
 interface StarWarsApi {
+
     @GET("people")
     suspend fun getPeople(): Response<PeopleResponseDto>
 

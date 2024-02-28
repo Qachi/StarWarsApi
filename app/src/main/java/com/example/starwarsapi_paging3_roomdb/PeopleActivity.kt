@@ -17,6 +17,7 @@ import com.example.starwarsapi_paging3_roomdb.databinding.ActivityPeopleBinding
 import com.example.starwarsapi_paging3_roomdb.model.PeopleResponseEntity
 import com.example.starwarsapi_paging3_roomdb.util.Constant
 import com.example.starwarsapi_paging3_roomdb.util.NetworkUtils
+import com.example.starwarsapi_paging3_roomdb.util.SnackBarExtensions.showNetworkErrorSnackBar
 import com.example.starwarsapi_paging3_roomdb.viewmodel.PeopleViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,7 +51,7 @@ class PeopleActivity : AppCompatActivity(), StarWarAdapter.OnPeopleClickListener
                     false
                 )
             val divider = DividerItemDecoration(
-                applicationContext,
+                this@PeopleActivity,
                 DividerItemDecoration.VERTICAL
             )
             addItemDecoration(divider)
@@ -74,27 +75,28 @@ class PeopleActivity : AppCompatActivity(), StarWarAdapter.OnPeopleClickListener
         } else {
             setUpRecyclerView()
             initViewModel()
-            snackBar()
+            bindings.root.showNetworkErrorSnackBar(this,getString(R.string.network_connection))
         }
     }
 
-    private fun snackBar() {
-        val snackBar = Snackbar.make(
-            findViewById(R.id.frameLayout),
-            getString(R.string.network_connection),
-            Toast.LENGTH_SHORT
-        )
-            .setAction(getString(R.string.ok)) {
-
-            }
-            .setActionTextColor(Color.WHITE)
-        val snackBarView = snackBar.view
-        snackBarView.setBackgroundColor(Color.RED)
-        val textView =
-            snackBarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
-        textView.setTextColor(Color.WHITE)
-        snackBar.show()
-    }
+    // You can extract this as a custom snackBar class or extension function
+//    private fun snackBar() {
+//        val snackBar = Snackbar.make(
+//            findViewById(R.id.frameLayout),
+//            getString(R.string.network_connection),
+//            Toast.LENGTH_SHORT
+//        )
+//            .setAction(getString(R.string.ok)) {
+//
+//            }
+//            .setActionTextColor(Color.WHITE)
+//        val snackBarView = snackBar.view
+//        snackBarView.setBackgroundColor(Color.RED)
+//        val textView =
+//            snackBarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+//        textView.setTextColor(Color.WHITE)
+//        snackBar.show()
+//    }
 
     override fun itemClicked(people: PeopleResponseEntity, position: Int) {
         val intent = Intent(this, PeopleDetailsActivity::class.java)

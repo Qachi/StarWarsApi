@@ -15,9 +15,12 @@ import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class PeopleDetailsActivity : AppCompatActivity() {
+
     private val viewModel by viewModels<PersonViewModel>()
     private val url by lazy { intent.extras!!.getString(Constant.CHARACTERS)!! }
+
     private lateinit var binding: ActivityPeopleDetailsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPeopleDetailsBinding.inflate(layoutInflater)
@@ -45,10 +48,12 @@ class PeopleDetailsActivity : AppCompatActivity() {
                             binding.genderTxt.text = person?.gender
                             supportActionBar?.title = person?.name
                         }
+
                         Status.ERROR -> {
                             // Handle the error state if needed
                             Log.e(TAG, "Error fetching person: ${resource.message}")
                         }
+
                         Status.LOADING -> {
                             // Handle the loading state if needed
                             Log.d(TAG, "Loading person data...")
@@ -63,7 +68,6 @@ class PeopleDetailsActivity : AppCompatActivity() {
     }
 
     private fun setActionBar() {
-
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
         }

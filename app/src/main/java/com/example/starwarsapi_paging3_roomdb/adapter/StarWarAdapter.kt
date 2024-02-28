@@ -11,6 +11,7 @@ import com.example.starwarsapi_paging3_roomdb.model.PeopleResponseEntity
 class StarWarAdapter(
     private val clickListener: OnPeopleClickListener
 ) : PagingDataAdapter<PeopleResponseEntity, StarWarAdapter.MyViewHolder>(diffUtil) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = RowLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
@@ -23,16 +24,18 @@ class StarWarAdapter(
 
     inner class MyViewHolder(private val binding: RowLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun initialize(people: PeopleResponseEntity) {
-            binding.apply {
+            with(binding) {
                 nameText.text = people.name
                 birthTxt.text = people.birth_year
                 filmTxt.text = people.films.joinToString("\n")
                 eyeTxt.text = people.eye_color
                 genderTxt.text = people.gender
-                itemView.setOnClickListener {
-                    clickListener.itemClicked(people, absoluteAdapterPosition)
-                }
+            }
+
+            binding.root.setOnClickListener {
+                clickListener.itemClicked(people, absoluteAdapterPosition)
             }
         }
     }

@@ -3,21 +3,22 @@ package com.example.starwarsapi_paging3_roomdb.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.AsyncPagingDataDiffer
 import androidx.recyclerview.widget.ListUpdateCallback
-import com.MainCoroutineRule
+import com.example.MainCoroutineRule
 import com.example.starwarsapi_paging3_roomdb.adapter.StarWarAdapter
 import com.example.starwarsapi_paging3_roomdb.data.listOfCharacters
 import com.example.starwarsapi_paging3_roomdb.repositories.FakeStarWarRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.*
-import org.junit.Assert.*
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class StarWarViewModelTest {
+class PeopleViewModelTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -37,7 +38,6 @@ class StarWarViewModelTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun fetchAllCharacters() = runTest {
-
         val differ = AsyncPagingDataDiffer(
             diffCallback = StarWarAdapter.diffUtil,
             updateCallback = ListUpdateTestCallback(),
@@ -46,7 +46,8 @@ class StarWarViewModelTest {
         val pagingData = sut.getPeople.first()
         differ.submitData(pagingData)
         advanceUntilIdle()
-        assertEquals(listOfCharacters.map { it.id },differ.snapshot().items.map { it.id
+        assertEquals(listOfCharacters.map { it.id }, differ.snapshot().items.map {
+            it.id
         })
     }
 
@@ -57,10 +58,3 @@ class StarWarViewModelTest {
         override fun onChanged(position: Int, count: Int, payload: Any?) {}
     }
 }
-
-
-    
-
-
-
-

@@ -1,6 +1,10 @@
 package com.example.starwarsapi_paging3_roomdb.repositories
 
-import androidx.paging.*
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
 import com.example.starwarsapi_paging3_roomdb.api.StarWarsApi
 import com.example.starwarsapi_paging3_roomdb.dao.StarWarDao
 import com.example.starwarsapi_paging3_roomdb.database.StarWarDatabase
@@ -38,8 +42,8 @@ class StarWarRepositoryImpl @Inject constructor(
             ),
             remoteMediator = StarWarRemoteMediator(starWarApi, starWarDatabase, 1),
             pagingSourceFactory = starWarPagingSource
-        ).flow.map { PeopleEntityPagingData ->
-            PeopleEntityPagingData.map { peopleEntity ->
+        ).flow.map { peopleEntityPagingData ->
+            peopleEntityPagingData.map { peopleEntity ->
                 PeopleResponseEntity(
                     id = peopleEntity.id,
                     name = peopleEntity.name,

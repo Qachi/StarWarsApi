@@ -12,7 +12,7 @@ import com.example.starwarsapi_paging3_roomdb.model.RoomTypeConverter
 @Database(
     entities = [PeopleResponseEntity::class,
         PeopleResponseRemoteKey::class],
-    version = 4
+    version = 6
 )
 @TypeConverters(RoomTypeConverter::class)
 abstract class StarWarDatabase : RoomDatabase() {

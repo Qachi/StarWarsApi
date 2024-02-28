@@ -15,10 +15,12 @@ class StarWarRemoteMediator(
     private val starWarsApi: StarWarsApi,
     private val starWarDatabase: StarWarDatabase,
     private val initialPage: Int = 1,
-):RemoteMediator<Int, PeopleResponseEntity>() {
+) : RemoteMediator<Int, PeopleResponseEntity>() {
+
     override suspend fun initialize(): InitializeAction {
         return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
+
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, PeopleResponseEntity>
@@ -30,11 +32,13 @@ class StarWarRemoteMediator(
                         ?: throw InvalidObjectException("InvalidObjectException")
                     remoteKey.next ?: return MediatorResult.Success(endOfPaginationReached = true)
                 }
+
                 LoadType.PREPEND -> {
                     val remoteKey = getFirstRemoteKey(state)
                         ?: throw InvalidObjectException("InvalidObjectException")
                     remoteKey.prev ?: return MediatorResult.Success(endOfPaginationReached = true)
                 }
+
                 LoadType.REFRESH -> {
                     val remoteKey = getClosestRemoteKeys(state)
                     remoteKey?.next?.minus(1) ?: initialPage
@@ -72,6 +76,7 @@ class StarWarRemoteMediator(
             MediatorResult.Error(e)
         }
     }
+
     private suspend fun getClosestRemoteKeys(state: PagingState<Int, PeopleResponseEntity>): PeopleResponseRemoteKey? {
         return state.anchorPosition?.let { it ->
             state.closestItemToPosition(it)?.let {
@@ -79,11 +84,13 @@ class StarWarRemoteMediator(
             }
         }
     }
+
     private suspend fun getLastRemoteKey(state: PagingState<Int, PeopleResponseEntity>): PeopleResponseRemoteKey? {
         return state.lastItemOrNull()?.let {
             starWarDatabase.getRemoteKeyDao().getPeopleRemoteKeys(it.id)
         }
     }
+
     private suspend fun getFirstRemoteKey(state: PagingState<Int, PeopleResponseEntity>): PeopleResponseRemoteKey? {
         return state.firstItemOrNull()?.let {
             starWarDatabase.getRemoteKeyDao().getPeopleRemoteKeys(it.id)

@@ -1,4 +1,4 @@
-package com
+package com.example
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +11,8 @@ import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
 @ExperimentalCoroutinesApi
-class MainCoroutineRule(private val dispatcher: CoroutineDispatcher = TestCoroutineDispatcher()) : TestWatcher(),
+class MainCoroutineRule(private val dispatcher: CoroutineDispatcher = TestCoroutineDispatcher()) :
+    TestWatcher(),
     TestCoroutineScope by TestCoroutineScope(dispatcher) {
 
     override fun starting(description: Description) {

@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.tasks.KaptGenerateStubs
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -38,6 +41,28 @@ android {
     kapt {
         correctErrorTypes true
     }
+
+//To resolve 'compileDebugJavaWithJavac' task (current target is 1.8) and
+// 'kaptGenerateStubsDebugKotlin' task (current target is 17)
+    sourceSets {
+        main {
+            java.srcDirs("src/main/java")
+            kotlin.srcDirs("src/main/kotlin")
+        }
+    }
+    
+//To resolve 'compileDebugJavaWithJavac' task (current target is 1.8) and
+// 'kaptGenerateStubsDebugKotlin' task (current target is 17)
+    tasks.withType(KotlinCompile).configureEach {
+        configure {
+            kotlinOptions {
+                jvmTarget = '1.8'
+            }
+        }
+    }
+
+    namespace 'com.example.starwarsapi_paging3_roomdb'
+
 }
 
 dependencies {

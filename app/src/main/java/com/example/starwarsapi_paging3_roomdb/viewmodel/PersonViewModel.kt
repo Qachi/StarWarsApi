@@ -13,13 +13,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PersonViewModel @Inject constructor(
-    private val starWarRepositoryImpl: StarWarRepositoryImpl
+    private val starWarRepository: StarWarRepositoryImpl
 ) : ViewModel() {
 
     fun getPerson(url: String): Flow<Resource<PeopleResponseEntity?>> {
         return flow {
             try {
-                emit(starWarRepositoryImpl.getPerson(url))
+                emit(starWarRepository.getPerson(url))
             } catch (e: Exception) {
                 emit(Resource.error("Exception occurred: ${e.message}", null))
             }

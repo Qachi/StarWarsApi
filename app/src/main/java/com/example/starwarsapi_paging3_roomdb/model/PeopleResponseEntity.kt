@@ -16,6 +16,6 @@ data class PeopleResponseEntity(
     val films: List<String>,
     val gender: String,
     @PrimaryKey(autoGenerate = false) val url: String
-):Parcelable
+) : Parcelable
 
 

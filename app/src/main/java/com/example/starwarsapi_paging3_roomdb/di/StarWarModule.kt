@@ -19,6 +19,7 @@ import javax.inject.Singleton
 
 @[Module InstallIn(SingletonComponent::class)]
 object StarWarModule {
+
     @[Singleton Provides]
     fun provideRetrofit(): Retrofit =
         Retrofit.Builder()
