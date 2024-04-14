@@ -1,9 +1,12 @@
 package com.example.starwarsapi_paging3_roomdb.model
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "user_table")
 data class PeopleResponseEntity(
     @SerializedName("_id") val id: Int,
@@ -13,15 +16,6 @@ data class PeopleResponseEntity(
     val films: List<String>,
     val gender: String,
     @PrimaryKey(autoGenerate = false) val url: String
-) {
-    fun toPeople() = People(
-        id = id,
-        name = name,
-        birth_year = birth_year,
-        eye_color = birth_year,
-        films = films,
-        gender = gender,
-        url = url
-    )
-}
+) : Parcelable
+
 

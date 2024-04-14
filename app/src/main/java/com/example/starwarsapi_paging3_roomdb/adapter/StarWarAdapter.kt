@@ -1,23 +1,20 @@
 package com.example.starwarsapi_paging3_roomdb.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.starwarsapi_paging3_roomdb.R
-import com.example.starwarsapi_paging3_roomdb.model.People
-import kotlinx.android.synthetic.main.row_layout.view.*
+import com.example.starwarsapi_paging3_roomdb.databinding.RowLayoutBinding
+import com.example.starwarsapi_paging3_roomdb.model.PeopleResponseEntity
 
 class StarWarAdapter(
     private val clickListener: OnPeopleClickListener
-) : PagingDataAdapter<People, StarWarAdapter.MyViewHolder>(diffUtil) {
+) : PagingDataAdapter<PeopleResponseEntity, StarWarAdapter.MyViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.row_layout, parent, false)
-        )
+        val binding = RowLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MyViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -25,33 +22,36 @@ class StarWarAdapter(
         holder.initialize(currentItem)
     }
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MyViewHolder(private val binding: RowLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun initialize(people: People) {
-            itemView.name_text.text = people.name
-            itemView.birth_txt.text = people.birth_year
-            itemView.film_txt.text = people.films.joinToString("\n")
-            itemView.eye_txt.text = people.eye_color
-            itemView.gender_txt.text = people.gender
+        fun initialize(people: PeopleResponseEntity) {
+            with(binding) {
+                nameText.text = people.name
+                birthTxt.text = people.birth_year
+                filmTxt.text = people.films.joinToString("\n")
+                eyeTxt.text = people.eye_color
+                genderTxt.text = people.gender
+            }
 
-            itemView.setOnClickListener {
+            binding.root.setOnClickListener {
                 clickListener.itemClicked(people, absoluteAdapterPosition)
             }
         }
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<People>() {
+        val diffUtil = object : DiffUtil.ItemCallback<PeopleResponseEntity>() {
             override fun areItemsTheSame(
-                oldItem: People,
-                newItem: People
+                oldItem: PeopleResponseEntity,
+                newItem: PeopleResponseEntity
             ): Boolean {
                 return oldItem.name == newItem.name
             }
 
             override fun areContentsTheSame(
-                oldItem: People,
-                newItem: People
+                oldItem: PeopleResponseEntity,
+                newItem: PeopleResponseEntity
             ): Boolean {
                 return oldItem.name == newItem.name
             }
@@ -59,6 +59,6 @@ class StarWarAdapter(
     }
 
     interface OnPeopleClickListener {
-        fun itemClicked(people: People, position: Int)
+        fun itemClicked(people: PeopleResponseEntity, position: Int)
     }
 }

@@ -9,7 +9,7 @@ import retrofit2.http.Url
 interface StarWarsApi {
 
     @GET("people")
-    suspend fun getPost(): Response<PeopleResponseDto>
+    suspend fun getPeople(): Response<PeopleResponseDto>
 
     @GET
     suspend fun getPerson(@Url url: String): Response<PeopleResponseEntity>

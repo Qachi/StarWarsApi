@@ -9,6 +9,4 @@ class RoomTypeConverter {
 
     @TypeConverter
     fun toFilms(films: String) = films.split(",")
-
-
 }

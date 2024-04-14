@@ -9,7 +9,6 @@ data class PeopleDto(
     val gender: String,
     val url: String
 ) {
-
     fun toPeopleResponseEntity() = PeopleResponseEntity(
         id = id,
         name = name,

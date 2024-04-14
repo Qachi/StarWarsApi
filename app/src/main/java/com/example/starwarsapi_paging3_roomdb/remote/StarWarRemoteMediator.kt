@@ -25,7 +25,6 @@ class StarWarRemoteMediator(
         loadType: LoadType,
         state: PagingState<Int, PeopleResponseEntity>
     ): MediatorResult {
-
         return try {
             val page = when (loadType) {
                 LoadType.APPEND -> {
@@ -33,44 +32,39 @@ class StarWarRemoteMediator(
                         ?: throw InvalidObjectException("InvalidObjectException")
                     remoteKey.next ?: return MediatorResult.Success(endOfPaginationReached = true)
                 }
+
                 LoadType.PREPEND -> {
                     val remoteKey = getFirstRemoteKey(state)
                         ?: throw InvalidObjectException("InvalidObjectException")
                     remoteKey.prev ?: return MediatorResult.Success(endOfPaginationReached = true)
                 }
+
                 LoadType.REFRESH -> {
                     val remoteKey = getClosestRemoteKeys(state)
                     remoteKey?.next?.minus(1) ?: initialPage
                 }
             }
-
-            val response = starWarsApi.getPost()
+            val response = starWarsApi.getPeople()
             val endOfPagination = response.body()?.results?.size!! < state.config.pageSize
 
             if (response.isSuccessful) {
                 response.body()?.let {
-
                     if (loadType == LoadType.REFRESH) {
                         starWarDatabase.getStarWarDao().deletePeople()
                         starWarDatabase.getRemoteKeyDao().deleteRemoteKeys()
                     }
-
                     val prev = if (page == initialPage) null else page.minus(1)
                     val next = if (endOfPagination) null else page.plus(1)
 
                     val list = response.body()?.results?.map {
                         PeopleResponseRemoteKey(it.url, prev, next)
                     }
-
                     if (list != null) {
-
                         starWarDatabase.getStarWarDao().insertPeople(response.body()?.results?.map {
                             it.toPeopleResponseEntity()
-
                         }!!)
                     }
                     if (list != null) {
-
                         starWarDatabase.getRemoteKeyDao().insertAllRemoteKeys(list)
                     }
                 }
